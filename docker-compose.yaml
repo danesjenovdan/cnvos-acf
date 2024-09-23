@@ -1,0 +1,43 @@
+volumes:
+  postgres-data:
+
+
+services:
+  wagtail:
+    build: ./acf
+    working_dir: /app
+    command: ./manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./acf:/app:delegated,rw
+    ports:
+      - "8000:8000"
+    environment:
+      DJANGO_DATABASE_HOST: db
+      DJANGO_DATABASE_NAME: wagtail
+      DJANGO_DATABASE_USERNAME: wagtail
+      DJANGO_DATABASE_PASSWORD: changeme
+    depends_on:
+      - db
+
+  # css-compile:
+  #   build: ./css-compile
+  #   working_dir: /app
+  #   command: yarn dev
+  #   volumes:
+  #     - ./djnd:/app/djnd:delegated,rw
+  #     - ./css-compile/src:/app/src:delegated,rw
+  #     - ./css-compile/postcss.config.js:/app/postcss.config.js:delegated,rw
+  #     - ./css-compile/tailwind.config.js:/app/tailwind.config.js:delegated,rw
+  #   depends_on:
+  #     - db
+
+  db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: wagtail
+      POSTGRES_USER: wagtail
+      POSTGRES_PASSWORD: changeme
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    expose:
+      - "5432"
