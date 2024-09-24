@@ -164,6 +164,8 @@ STORAGES = {
 
 # Wagtail settings
 
+WAGTAIL_ALLOW_UNICODE_SLUGS = False
+
 WAGTAIL_SITE_NAME = "acf"
 
 # Search
