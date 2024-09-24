@@ -11,6 +11,7 @@ django-modelcluster==6.3
 django-permissionedforms==0.1
 django-taggit==5.0.1
 django-treebeard==4.7.1
+django-storages==1.14.2
 djangorestframework==3.15.2
 draftjs-exporter==5.0.0
 et-xmlfile==1.1.0
