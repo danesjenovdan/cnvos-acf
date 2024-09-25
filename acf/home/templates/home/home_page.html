@@ -1,28 +1,86 @@
 {% extends "base.html" %}
-{% load static wagtailcore_tags %}
+{% load static wagtailcore_tags wagtailimages_tags %}
 
 {% block body_class %}template-homepage{% endblock %}
 
-
 {% block content %}
 
-<h1>{{ page.title }}</h1>
+<div class="container">
+    <div class="row justify-content-center my-5">
+        <div class="col-md-8">
+            <h1 class="text-center mb-4">{{ page.title }}</h1>
+            <div class="rich-text">
+                {{ page.introduction|richtext }}
+            </div>
+            <form id="filters" action="{% pageurl page %}" method="get" class="mb-8">
+                <div class="filters">
+                    <h6>Kategorija</h6>
+                    {% for category in categories %}
+                        <input
+                            type="checkbox" 
+                            name="kategorija" 
+                            class=""
+                            value="{{ category.id }}" 
+                            id="id_kategorija_{{ forloop.counter0 }}"
+                            {% if category.id|slugify in form.kategorija.value %}checked="checked"{% endif %}                                    
+                        >
+                        <label for="id_kategorija_{{ forloop.counter0 }}">
+                            {{ category.name }}
+                        </label>
+                    {% endfor %}
+                </div>
+                <div class="filters">
+                    <h6>Tip projekta</h6>
+                    {% for project_type in project_types %}
+                        <input
+                            type="checkbox" 
+                            name="tip_projekta" 
+                            class=""
+                            value="{{ project_type.id }}" 
+                            id="id_tip_projekta_{{ forloop.counter0 }}"
+                            {% if project_type.id|slugify in form.tip_projekta.value %}checked="checked"{% endif %}                                    
+                        >
+                        <label for="id_tip_projekta_{{ forloop.counter0 }}">
+                            {{ project_type.name }}
+                        </label>
+                    {% endfor %}
+                </div>
+                <button type="submit">Filter</button>
+            </form>
+        </div>
+    </div>
 
-{{ page.introduction|richtext }}
+    {% for category_name, category_projects in projects.items %}
+    {% if category_projects %}
+    <div class="colored-section my-5">
+        <div class="row py-3">
+            <div class="col-12">
+                <div class="d-flex align-items-center">
+                    <div class="category-icon"></div>
+                    <h2>{{ category_name }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row projects-list">
+            {% for project in category_projects %}
+                <div class="col-md-6 col-lg-4 col-xl-3">
+                    <a href="{% pageurl project %}" class="card">
+                        {% image project.card_image original class="card-img-top img-fluid" %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ project.title }}</h5>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+    
+</div>
 
-{% for category_name, category_projects in categories.items %}
-<h2>{{ category_name }}</h2>
-{% for project in category_projects %}
+{% include "home/footer.html" %}
 
-<a href="{% pageurl project %}">
-    <h3>{{ project.title }}</h3>
-</a>
-
-{% endfor %}
-{% endfor %}
-
-<p>
-    {{ page.financer_disclaimer }}
-</p>
 
 {% endblock content %}

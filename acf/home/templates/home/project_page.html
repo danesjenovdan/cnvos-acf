@@ -1,25 +1,93 @@
 {% extends "base.html" %}
-{% load static wagtailcore_tags %}
+{% load static wagtailcore_tags wagtailimages_tags %}
 
 {% block body_class %}template-project{% endblock %}
 
 {% block content %}
 
-<h1>{{ page.title }}</h1>
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <a href="/">Nazaj na seznam projektov</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            {% image page.card_image original class="img-fluid" %}
+            <div class="project-info">
+                <p>Nosilec projekta</p>
+                <p><strong>{{ page.project_owner }}</strong></p>
+                <p>Kontakt</p>
+                <p><strong>{{ page.contact_person }}</strong></p>
+                <p><strong><a href="mailto:{{ page.contact }}">{{ page.contact }}</a></strong></p>
+                <p>Spletno mesto projekta</p>
+                <p><strong><a href="{{ page.website }}" target="_blank">{{ page.website }}</a></strong></p>
+            </div>
+            <div class="project-numbers">
+                <div class="d-flex align-items-center">
+                    <div class="icon">
 
-<p>Nosilec projekta: {{ page.project_owner }}</p>
-<p>Vrednost projekta: {{ page.budget }}</p>
+                    </div>
+                    <div class="text">
+                        <p>Proračun</p>
+                        <p><strong>{{ page.budget }}</strong></p>
+                    </div>
+                </div>
+                <hr />
+                <div class="d-flex align-items-center">
+                    <div class="icon">
 
-{{ page.description|richtext }}
+                    </div>
+                    <div class="text">
+                        <p>Trajanje</p>
+                        <p><strong>{{ page.duration }}</strong></p>
+                    </div>
+                </div>
+                <hr />
+                <div class="d-flex align-items-center">
+                    <div class="icon">
 
-<h2>V številkah (grafike)</h2>
-<div>{{ page.budget }}</div>
-<div>{{ page.duration }}</div>
-<div>{{ page.results }}</div>
+                    </div>
+                    <div class="text">
+                        <p>Uspehi</p>
+                        <p><strong>{{ page.results }}</strong></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <h1 class="mb-4">{{ page.title }}</h1>
+            <div>
+                <span class="badge rounded-pill text-bg-light">{{ page.category }}</span>
+                <span class="badge rounded-pill text-bg-light">{{ page.project_type }}</span>
+            </div>
+            <div class="my-5">
+                {{ page.description|richtext }}
+            </div>
+            <div class="my-5">
+                <div id="images-carousel" class="carousel slide">
+                    <div class="carousel-inner">
+                        {% for photo in page.photos %}
+                        <div class="carousel-item {% if forloop.counter == 1%}active{% endif %}">
+                            {{ photo }}
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#images-carousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#images-carousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 
-<h2>Kontakt</h2>
-<p>{{ page.contact }}</p>
-<p><a href="{{ page.website }}" target="_blank">{{ page.website }}</a></p>
+{% include "home/footer.html" %}
 
 {% endblock content %}

@@ -1,0 +1,14 @@
+{% load static %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-4 text-end">
+            <a href="" target="_blank">
+                <img src="{% static 'acf-logo.png' %}" />
+            </a>
+        </div>
+        <div class="col-8">
+            <p>{{ settings.home.GeneralSettings.financer_disclaimer }}</p>
+        </div>
+    </div>
+</div>
