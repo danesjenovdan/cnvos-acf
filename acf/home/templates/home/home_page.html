@@ -7,53 +7,59 @@
 
 <div class="container">
     <div class="row justify-content-center my-5">
-        <div class="col-md-8">
+        <div class="col-md-10">
             <h1 class="text-center mb-4">{{ page.title }}</h1>
-            <div class="rich-text">
+            <div class="introduction text-center mb-5">
                 {{ page.introduction|richtext }}
             </div>
-            <form id="filters" action="{% pageurl page %}" method="get" class="mb-8">
-                <div class="filters">
-                    <h6>Kategorija</h6>
-                    {% for category in categories %}
-                        <input
-                            type="checkbox" 
-                            name="kategorija" 
-                            class=""
-                            value="{{ category.id }}" 
-                            id="id_kategorija_{{ forloop.counter0 }}"
-                            {% if category.id|slugify in form.kategorija.value %}checked="checked"{% endif %}                                    
-                        >
-                        <label for="id_kategorija_{{ forloop.counter0 }}">
-                            {{ category.name }}
-                        </label>
-                    {% endfor %}
+            <form id="filters" action="{% pageurl page %}" method="get" class="mb-8 p-4">
+                <div class="filters mb-4">
+                    <h6 class="mb-3">Filtriraj po prednostnih področjih</h6>
+                    <div class="filters-categories">
+                        {% for category in categories %}
+                            <input
+                                type="checkbox" 
+                                name="kategorija" 
+                                class=""
+                                value="{{ category.id }}" 
+                                id="id_kategorija_{{ forloop.counter0 }}"
+                                {% if category.id|slugify in form.kategorija.value %}checked="checked"{% endif %} 
+                                onchange="filterProjects()"
+                            >
+                            <label for="id_kategorija_{{ forloop.counter0 }}">
+                                {{ category.name }}
+                            </label>
+                        {% endfor %}
+                    </div>
                 </div>
                 <div class="filters">
-                    <h6>Tip projekta</h6>
-                    {% for project_type in project_types %}
-                        <input
-                            type="checkbox" 
-                            name="tip_projekta" 
-                            class=""
-                            value="{{ project_type.id }}" 
-                            id="id_tip_projekta_{{ forloop.counter0 }}"
-                            {% if project_type.id|slugify in form.tip_projekta.value %}checked="checked"{% endif %}                                    
-                        >
-                        <label for="id_tip_projekta_{{ forloop.counter0 }}">
-                            {{ project_type.name }}
-                        </label>
-                    {% endfor %}
+                    <h6 class="mb-3">Filtriraj po tipu projekta</h6>
+                    <div class="filters-project-types">
+                        {% for project_type in project_types %}
+                            <input
+                                type="checkbox" 
+                                name="tip_projekta" 
+                                class=""
+                                value="{{ project_type.id }}" 
+                                id="id_tip_projekta_{{ forloop.counter0 }}"
+                                {% if project_type.id|slugify in form.tip_projekta.value %}checked="checked"{% endif %}
+                                onchange="filterProjects()"                              
+                            >
+                            <label for="id_tip_projekta_{{ forloop.counter0 }}">
+                                {{ project_type.name }}
+                            </label>
+                        {% endfor %}
+                    </div>
                 </div>
-                <button type="submit">Filter</button>
             </form>
         </div>
     </div>
-
-    {% for category_name, category_projects in projects.items %}
-    {% if category_projects %}
-    <div class="colored-section my-5">
-        <div class="row py-3">
+</div>
+{% for category_name, category_projects in projects.items %}
+{% if category_projects %}
+<div class="container-fluid colored-section my-5">
+    <div class="container py-5">
+        <div class="row mb-4">
             <div class="col-12">
                 <div class="d-flex align-items-center">
                     <div class="category-icon"></div>
@@ -65,7 +71,7 @@
             {% for project in category_projects %}
                 <div class="col-md-6 col-lg-4 col-xl-3">
                     <a href="{% pageurl project %}" class="card">
-                        {% image project.card_image original class="card-img-top img-fluid" %}
+                        {% image project.card_image original class="card-img-top" %}
                         <div class="card-body">
                             <h5 class="card-title">{{ project.title }}</h5>
                             <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
@@ -75,10 +81,9 @@
             {% endfor %}
         </div>
     </div>
-    {% endif %}
-    {% endfor %}
-    
 </div>
+{% endif %}
+{% endfor %}
 
 {% include "home/footer.html" %}
 
