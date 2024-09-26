@@ -27,6 +27,7 @@
                                 onchange="filterProjects()"
                             >
                             <label for="id_kategorija_{{ forloop.counter0 }}">
+                                <img src="{% static 'category.svg' %}" />
                                 {{ category.name }}
                             </label>
                         {% endfor %}
@@ -46,6 +47,7 @@
                                 onchange="filterProjects()"                              
                             >
                             <label for="id_tip_projekta_{{ forloop.counter0 }}">
+                                <img src="{% static 'category.svg' %}" />
                                 {{ project_type.name }}
                             </label>
                         {% endfor %}
@@ -62,7 +64,9 @@
         <div class="row mb-4">
             <div class="col-12">
                 <div class="d-flex align-items-center">
-                    <div class="category-icon"></div>
+                    <div class="category-icon d-flex align-items-center justify-content-center">
+                        <img src="{% static 'category.svg' %}" />
+                    </div>
                     <h2>{{ category_name }}</h2>
                 </div>
             </div>
@@ -74,7 +78,7 @@
                         {% image project.card_image original class="card-img-top" %}
                         <div class="card-body">
                             <h5 class="card-title">{{ project.title }}</h5>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <p class="card-text">{{ project.project_owner }}</p>
                         </div>
                     </a>
                 </div>
