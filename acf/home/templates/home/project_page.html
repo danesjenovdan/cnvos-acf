@@ -1,25 +1,125 @@
 {% extends "base.html" %}
-{% load static wagtailcore_tags %}
+{% load static wagtailcore_tags wagtailimages_tags %}
 
 {% block body_class %}template-project{% endblock %}
 
 {% block content %}
 
-<h1>{{ page.title }}</h1>
+<div class="container">
+    <div class="row my-4">
+        <div class="col-12">
+            <img src="{% static 'arrow.svg' %}" />
+            <a href="/" class="back-button">Nazaj na seznam projektov</a>
+        </div>
+    </div>
+    <div class="row my-5">
+        <div class="col-md-4">
+            <div class="mb-4 d-md-none">
+                <h1 class="mb-4">{{ page.title }}</h1>
+                <div>
+                    <span class="badge rounded-pill category-badge py-1 px-2 d-inline-flex align-items-center mb-3">
+                        <img src="{% static 'category.svg' %}" />
+                        {{ page.category }}
+                    </span>
+                    <span class="badge rounded-pill project-type-badge py-1 px-2 d-inline-flex align-items-center">
+                        <img src="{% static 'category.svg' %}" />
+                        {{ page.project_type }}
+                    </span>
+                </div>
+            </div>
+            {% image page.card_image original class="img-fluid mb-4" %}
+            <div class="project-info colored-section p-4 mb-4">
+                <h6 class="mb-2">Nosilec projekta</h6>
+                <p class="mb-3"><strong>{{ page.project_owner }}</strong></p>
+                <h6 class="mb-2">Kontakt</h6>
+                <p class="mb-0"><strong>{{ page.contact_person }}</strong></p>
+                <p>
+                    <img src="{% static 'email.svg' %}" />
+                    <strong>
+                        <a href="mailto:{{ page.contact }}">{{ page.contact }}</a>
+                    </strong>
+                </p>
+                <h6 class="mb-2">Spletno mesto projekta</h6>
+                <p>
+                    <img src="{% static 'website.svg' %}" />
+                    <strong>
+                        <a href="{{ page.website }}" target="_blank">{{ page.website }}</a>
+                    </strong>
+                </p>
+            </div>
+            <div class="project-numbers p-4 mb-4">
+                <div class="d-flex align-items-center">
+                    <div class="icon">
+                        <img src="{% static 'budget.svg' %}" class="p-1 img-fluid" />
+                    </div>
+                    <div class="text">
+                        <h6>Proračun</h6>
+                        <p class="mb-0"><strong>{{ page.budget }}</strong></p>
+                    </div>
+                </div>
+                <hr />
+                <div class="d-flex align-items-center">
+                    <div class="icon">
+                        <img src="{% static 'date.svg' %}" class="p-1 img-fluid" />
+                    </div>
+                    <div class="text">
+                        <h6>Trajanje</h6>
+                        <p class="mb-0"><strong>{{ page.duration }}</strong></p>
+                    </div>
+                </div>
+                <hr />
+                <div class="d-flex align-items-center">
+                    <div class="icon">
+                        <img src="{% static 'success.svg' %}" class="p-3 img-fluid" />
+                    </div>
+                    <div class="text">
+                        <h6>Uspehi</h6>
+                        <p class="mb-0"><strong>{{ page.results }}</strong></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8 ps-md-5">
+            <div class="d-none d-md-block">
+                <h1 class="mb-4">{{ page.title }}</h1>
+                <div>
+                    <span class="badge rounded-pill category-badge py-1 px-2 d-inline-flex align-items-center mb-3">
+                        <img src="{% static 'category.svg' %}" />
+                        {{ page.category }}
+                    </span>
+                    <span class="badge rounded-pill project-type-badge py-1 px-2 d-inline-flex align-items-center">
+                        <img src="{% static 'category.svg' %}" />
+                        {{ page.project_type }}
+                    </span>
+                </div>
+            </div>
+            <div class="my-3 my-md-5 rich-text">
+                {{ page.description|richtext }}
+            </div>
+            <div class="my-5">
+                <div id="images-carousel" class="carousel slide">
+                    <div class="carousel-inner">
+                        {% for photo in page.photos %}
+                        <div class="carousel-item {% if forloop.counter == 1%}active{% endif %}">
+                            {{ photo }}
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#images-carousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#images-carousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-<p>Nosilec projekta: {{ page.project_owner }}</p>
-<p>Vrednost projekta: {{ page.budget }}</p>
 
-{{ page.description|richtext }}
-
-<h2>V številkah (grafike)</h2>
-<div>{{ page.budget }}</div>
-<div>{{ page.duration }}</div>
-<div>{{ page.results }}</div>
-
-
-<h2>Kontakt</h2>
-<p>{{ page.contact }}</p>
-<p><a href="{{ page.website }}" target="_blank">{{ page.website }}</a></p>
+{% include "home/footer.html" %}
 
 {% endblock content %}

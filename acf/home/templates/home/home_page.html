@@ -1,28 +1,100 @@
 {% extends "base.html" %}
-{% load static wagtailcore_tags %}
+{% load static wagtailcore_tags wagtailimages_tags %}
 
 {% block body_class %}template-homepage{% endblock %}
 
-
 {% block content %}
 
-<h1>{{ page.title }}</h1>
-
-{{ page.introduction|richtext }}
-
-{% for category_name, category_projects in categories.items %}
-<h2>{{ category_name }}</h2>
-{% for project in category_projects %}
-
-<a href="{% pageurl project %}">
-    <h3>{{ project.title }}</h3>
-</a>
-
+<div class="container">
+    <div class="row justify-content-center my-5">
+        <div class="col-md-10">
+            <h1 class="text-center mb-4">{{ page.title }}</h1>
+            <div class="introduction text-center mb-5">
+                {{ page.introduction|richtext }}
+            </div>
+            <div class="text-center">
+                <button class="filter-button btn rounded-0 border-0" type="button" data-bs-toggle="collapse" aria-expanded="true" data-bs-target="#filters" aria-controls="filters">
+                    Filtriraj po projektih
+                </button>
+            </div>
+            <form id="filters" action="{% pageurl page %}" method="get" class="mb-8 p-4 collapse">
+                <div class="filters mb-4">
+                    <h6 class="mb-3">Filtriraj po prednostnih področjih</h6>
+                    <div class="filters-categories">
+                        {% for category in categories %}
+                            <input
+                                type="checkbox" 
+                                name="kategorija" 
+                                class=""
+                                value="{{ category.id }}" 
+                                id="id_kategorija_{{ forloop.counter0 }}"
+                                {% if category.id|slugify in form.kategorija.value %}checked="checked"{% endif %} 
+                                onchange="filterProjects()"
+                            >
+                            <label for="id_kategorija_{{ forloop.counter0 }}">
+                                <img src="{% static 'category.svg' %}" />
+                                {{ category.name }}
+                            </label>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="filters">
+                    <h6 class="mb-3">Filtriraj po tipu projekta</h6>
+                    <div class="filters-project-types">
+                        {% for project_type in project_types %}
+                            <input
+                                type="checkbox" 
+                                name="tip_projekta" 
+                                class=""
+                                value="{{ project_type.id }}" 
+                                id="id_tip_projekta_{{ forloop.counter0 }}"
+                                {% if project_type.id|slugify in form.tip_projekta.value %}checked="checked"{% endif %}
+                                onchange="filterProjects()"                              
+                            >
+                            <label for="id_tip_projekta_{{ forloop.counter0 }}">
+                                <img src="{% static 'category.svg' %}" />
+                                {{ project_type.name }}
+                            </label>
+                        {% endfor %}
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% for category_name, category_projects in projects.items %}
+{% if category_projects %}
+<div class="container-fluid colored-section my-5">
+    <div class="container py-5">
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="d-flex align-items-center">
+                    <div class="category-icon d-flex align-items-center justify-content-center">
+                        <img src="{% static 'category.svg' %}" />
+                    </div>
+                    <h2>{{ category_name }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row projects-list">
+            {% for project in category_projects %}
+                <div class="col-md-6 col-lg-4 col-xl-3">
+                    <a href="{% pageurl project %}" class="card mb-4">
+                        {% image project.card_image original class="card-img-top" %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ project.title }}</h5>
+                            <p class="card-text">{{ project.project_owner }}</p>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endif %}
 {% endfor %}
-{% endfor %}
 
-<p>
-    {{ page.financer_disclaimer }}
-</p>
+{% include "home/footer.html" %}
+
 
 {% endblock content %}
