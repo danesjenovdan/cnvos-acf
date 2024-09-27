@@ -12,7 +12,12 @@
             <div class="introduction text-center mb-5">
                 {{ page.introduction|richtext }}
             </div>
-            <form id="filters" action="{% pageurl page %}" method="get" class="mb-8 p-4">
+            <div class="text-center">
+                <button class="filter-button btn rounded-0 border-0" type="button" data-bs-toggle="collapse" aria-expanded="true" data-bs-target="#filters" aria-controls="filters">
+                    Filtriraj po projektih
+                </button>
+            </div>
+            <form id="filters" action="{% pageurl page %}" method="get" class="mb-8 p-4 collapse">
                 <div class="filters mb-4">
                     <h6 class="mb-3">Filtriraj po prednostnih področjih</h6>
                     <div class="filters-categories">
@@ -74,7 +79,7 @@
         <div class="row projects-list">
             {% for project in category_projects %}
                 <div class="col-md-6 col-lg-4 col-xl-3">
-                    <a href="{% pageurl project %}" class="card">
+                    <a href="{% pageurl project %}" class="card mb-4">
                         {% image project.card_image original class="card-img-top" %}
                         <div class="card-body">
                             <h5 class="card-title">{{ project.title }}</h5>
