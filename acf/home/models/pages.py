@@ -17,8 +17,9 @@ class Category(models.Model):
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
-        related_name='+',
-        verbose_name="Ikona")
+        related_name="+",
+        verbose_name="Ikona",
+    )
 
     panels = [
         FieldPanel("name"),
@@ -27,7 +28,7 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
-    
+
     class Meta:
         verbose_name = "Kategorija"
         verbose_name_plural = "Kategorije"
@@ -41,8 +42,9 @@ class ProjectType(models.Model):
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
-        related_name='+',
-        verbose_name="Ikona")
+        related_name="+",
+        verbose_name="Ikona",
+    )
 
     panels = [
         FieldPanel("name"),
@@ -51,7 +53,7 @@ class ProjectType(models.Model):
 
     def __str__(self):
         return self.name
-    
+
     class Meta:
         verbose_name = "Tip projekta"
         verbose_name_plural = "Tipi projektov"
@@ -72,15 +74,14 @@ class ProjectsFilterForm(forms.Form):
 
 class HomePage(Page):
     introduction = RichTextField(blank=True, null=True)
-    
+
     content_panels = Page.content_panels + [
         FieldPanel("introduction"),
     ]
 
-    parent_page_type = [
-    ]
+    parent_page_type = []
     subpage_types = [
-        'home.ProjectPage',
+        "home.ProjectPage",
     ]
 
     def get_context(self, request, *args, **kwargs):
@@ -109,7 +110,7 @@ class HomePage(Page):
             category_projects = projects.filter(category=category)
             categories_dict[category.id] = {
                 "projects": category_projects,
-                "category": category
+                "category": category,
             }
 
         return {
@@ -117,7 +118,7 @@ class HomePage(Page):
             "categories": categories,
             "project_types": project_types,
             "projects": categories_dict,
-            "form": form
+            "form": form,
         }
 
 
@@ -128,30 +129,40 @@ class ProjectPage(Page):
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
-        related_name='+',
-        verbose_name="Slika na kartici")
+        related_name="+",
+        verbose_name="Slika na kartici",
+    )
     category = models.ForeignKey(
         Category,
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
         related_name="+",
-        verbose_name="Kategorija",)
+        verbose_name="Kategorija",
+    )
     project_type = models.ForeignKey(
         ProjectType,
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
         related_name="+",
-        verbose_name="Tip projekta",)
+        verbose_name="Tip projekta",
+    )
     description = RichTextField(blank=True, null=True, verbose_name="Opis projekta")
     budget = models.TextField(blank=True)
     duration = models.TextField(blank=True, verbose_name="Trajanje")
     results = models.TextField(blank=True, verbose_name="Uspehi")
-    photos = StreamField([
-        ('image', ImageChooserBlock(label="Slika")),
-    ], verbose_name="Slike", null=True, blank=True)
-    website = models.URLField(blank=True, verbose_name="Povezava do spletnega mesta projekta")
+    photos = StreamField(
+        [
+            ("image", ImageChooserBlock(label="Slika")),
+        ],
+        verbose_name="Slike",
+        null=True,
+        blank=True,
+    )
+    website = models.URLField(
+        blank=True, verbose_name="Povezava do spletnega mesta projekta"
+    )
     contact_person = models.TextField(blank=True, verbose_name="Vodja projekta")
     contact = models.EmailField(blank=True, verbose_name="Kontakt vodje projekta")
 
@@ -185,10 +196,5 @@ class ProjectPage(Page):
         ),
     ]
 
-    parent_page_type = [
-        'home.HomePage'
-    ]
-    subpage_types = [
-    ]
-
-
+    parent_page_type = ["home.HomePage"]
+    subpage_types = []
