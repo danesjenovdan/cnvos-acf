@@ -32,7 +32,7 @@
                                 onchange="filterProjects()"
                             >
                             <label for="id_kategorija_{{ forloop.counter0 }}">
-                                <img src="{% static 'category.svg' %}" />
+                                {% image category.icon original class="w-auto h-auto" %}
                                 {{ category.name }}
                             </label>
                         {% endfor %}
@@ -52,7 +52,7 @@
                                 onchange="filterProjects()"                              
                             >
                             <label for="id_tip_projekta_{{ forloop.counter0 }}">
-                                <img src="{% static 'category.svg' %}" />
+                                {% image project_type.icon original class="w-auto h-auto" %}
                                 {{ project_type.name }}
                             </label>
                         {% endfor %}
@@ -62,28 +62,31 @@
         </div>
     </div>
 </div>
-{% for category_name, category_projects in projects.items %}
-{% if category_projects %}
+{% for id, data in projects.items %}
+{% if data.projects %}
 <div class="container-fluid colored-section my-5">
     <div class="container py-5">
         <div class="row mb-4">
             <div class="col-12">
                 <div class="d-flex align-items-center">
-                    <div class="category-icon d-flex align-items-center justify-content-center">
-                        <img src="{% static 'category.svg' %}" />
+                    <div class="category-icon p-3 d-flex align-items-center justify-content-center">
+                        {% image data.category.icon original class="img-fluid" %}
                     </div>
-                    <h2>{{ category_name }}</h2>
+                    <h2>{{ data.category.name }}</h2>
                 </div>
             </div>
         </div>
         <div class="row projects-list">
-            {% for project in category_projects %}
+            {% for project in data.projects %}
                 <div class="col-md-6 col-lg-4 col-xl-3">
-                    <a href="{% pageurl project %}" class="card mb-4">
+                    <a href="{% pageurl project %}" class="card mb-4 position-relative">
                         {% image project.card_image original class="card-img-top" %}
-                        <div class="card-body">
+                        <div class="card-body my-4">
                             <h5 class="card-title">{{ project.title }}</h5>
                             <p class="card-text">{{ project.project_owner }}</p>
+                        </div>
+                        <div class="icon text-center">
+                            {% image project.category.icon original class="" %}
                         </div>
                     </a>
                 </div>

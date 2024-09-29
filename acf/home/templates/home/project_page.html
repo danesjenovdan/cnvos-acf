@@ -18,11 +18,11 @@
                 <h1 class="mb-4">{{ page.title }}</h1>
                 <div>
                     <span class="badge rounded-pill category-badge py-1 px-2 d-inline-flex align-items-center mb-3">
-                        <img src="{% static 'category.svg' %}" />
+                        {% image page.category.icon original class="w-auto h-auto" %}
                         {{ page.category }}
                     </span>
                     <span class="badge rounded-pill project-type-badge py-1 px-2 d-inline-flex align-items-center">
-                        <img src="{% static 'category.svg' %}" />
+                        {% image page.project_type.icon original class="w-auto h-auto" %}
                         {{ page.project_type }}
                     </span>
                 </div>
@@ -84,11 +84,11 @@
                 <h1 class="mb-4">{{ page.title }}</h1>
                 <div>
                     <span class="badge rounded-pill category-badge py-1 px-2 d-inline-flex align-items-center mb-3">
-                        <img src="{% static 'category.svg' %}" />
+                        {% image page.category.icon original class="w-auto h-auto" %}
                         {{ page.category }}
                     </span>
                     <span class="badge rounded-pill project-type-badge py-1 px-2 d-inline-flex align-items-center">
-                        <img src="{% static 'category.svg' %}" />
+                        {% image page.project_type.icon original class="w-auto h-auto" %}
                         {{ page.project_type }}
                     </span>
                 </div>

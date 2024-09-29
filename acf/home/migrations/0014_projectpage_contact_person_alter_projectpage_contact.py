@@ -6,18 +6,20 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('home', '0013_rename_financersettings_generalsettings'),
+        ("home", "0013_rename_financersettings_generalsettings"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='projectpage',
-            name='contact_person',
-            field=models.TextField(blank=True, verbose_name='Vodja projekta'),
+            model_name="projectpage",
+            name="contact_person",
+            field=models.TextField(blank=True, verbose_name="Vodja projekta"),
         ),
         migrations.AlterField(
-            model_name='projectpage',
-            name='contact',
-            field=models.EmailField(blank=True, max_length=254, verbose_name='Kontakt vodje projekta'),
+            model_name="projectpage",
+            name="contact",
+            field=models.EmailField(
+                blank=True, max_length=254, verbose_name="Kontakt vodje projekta"
+            ),
         ),
     ]
