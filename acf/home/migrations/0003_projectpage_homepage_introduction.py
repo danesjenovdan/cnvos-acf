@@ -8,32 +8,42 @@ import wagtail.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('wagtailcore', '0094_alter_page_locale'),
-        ('home', '0002_create_homepage'),
+        ("wagtailcore", "0094_alter_page_locale"),
+        ("home", "0002_create_homepage"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='ProjectPage',
+            name="ProjectPage",
             fields=[
-                ('page_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='wagtailcore.page')),
-                ('project_owner', models.TextField(blank=True)),
-                ('project_value', models.TextField(blank=True)),
-                ('description', wagtail.fields.RichTextField(blank=True, null=True)),
-                ('budget', models.TextField(blank=True)),
-                ('duration', models.TextField(blank=True)),
-                ('results', models.TextField(blank=True)),
-                ('website', models.URLField(blank=True)),
-                ('contact', models.TextField(blank=True)),
+                (
+                    "page_ptr",
+                    models.OneToOneField(
+                        auto_created=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        parent_link=True,
+                        primary_key=True,
+                        serialize=False,
+                        to="wagtailcore.page",
+                    ),
+                ),
+                ("project_owner", models.TextField(blank=True)),
+                ("project_value", models.TextField(blank=True)),
+                ("description", wagtail.fields.RichTextField(blank=True, null=True)),
+                ("budget", models.TextField(blank=True)),
+                ("duration", models.TextField(blank=True)),
+                ("results", models.TextField(blank=True)),
+                ("website", models.URLField(blank=True)),
+                ("contact", models.TextField(blank=True)),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
-            bases=('wagtailcore.page',),
+            bases=("wagtailcore.page",),
         ),
         migrations.AddField(
-            model_name='homepage',
-            name='introduction',
+            model_name="homepage",
+            name="introduction",
             field=models.TextField(blank=True),
         ),
     ]

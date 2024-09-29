@@ -7,14 +7,21 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('wagtailimages', '0026_delete_uploadedimage'),
-        ('home', '0014_projectpage_contact_person_alter_projectpage_contact'),
+        ("wagtailimages", "0026_delete_uploadedimage"),
+        ("home", "0014_projectpage_contact_person_alter_projectpage_contact"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='projecttype',
-            name='icon',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='wagtailimages.image', verbose_name='Ikona'),
+            model_name="projecttype",
+            name="icon",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                related_name="+",
+                to="wagtailimages.image",
+                verbose_name="Ikona",
+            ),
         ),
     ]

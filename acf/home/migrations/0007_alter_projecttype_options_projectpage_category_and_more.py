@@ -7,22 +7,39 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('home', '0006_alter_category_options_category_icon_name'),
+        ("home", "0006_alter_category_options_category_icon_name"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='projecttype',
-            options={'verbose_name': 'Tip projekta', 'verbose_name_plural': 'Tipi projektov'},
+            name="projecttype",
+            options={
+                "verbose_name": "Tip projekta",
+                "verbose_name_plural": "Tipi projektov",
+            },
         ),
         migrations.AddField(
-            model_name='projectpage',
-            name='category',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='home.category', verbose_name='Kategorija'),
+            model_name="projectpage",
+            name="category",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                related_name="+",
+                to="home.category",
+                verbose_name="Kategorija",
+            ),
         ),
         migrations.AddField(
-            model_name='projectpage',
-            name='project_type',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='home.projecttype', verbose_name='Tip projekta'),
+            model_name="projectpage",
+            name="project_type",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                related_name="+",
+                to="home.projecttype",
+                verbose_name="Tip projekta",
+            ),
         ),
     ]

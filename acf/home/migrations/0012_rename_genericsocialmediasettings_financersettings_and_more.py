@@ -6,16 +6,16 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('home', '0011_genericsocialmediasettings_and_more'),
+        ("home", "0011_genericsocialmediasettings_and_more"),
     ]
 
     operations = [
         migrations.RenameModel(
-            old_name='GenericSocialMediaSettings',
-            new_name='FinancerSettings',
+            old_name="GenericSocialMediaSettings",
+            new_name="FinancerSettings",
         ),
         migrations.AlterModelOptions(
-            name='financersettings',
-            options={'verbose_name': 'Financer'},
+            name="financersettings",
+            options={"verbose_name": "Financer"},
         ),
     ]
