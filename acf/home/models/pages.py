@@ -12,11 +12,17 @@ from wagtail.images.blocks import ImageChooserBlock
 @register_snippet
 class Category(models.Model):
     name = models.TextField(blank=True, verbose_name="Ime kategorije")
-    icon_name = models.TextField(blank=True, verbose_name="Ikona")
+    icon = models.ForeignKey(
+        "wagtailimages.Image",
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        verbose_name="Ikona")
 
     panels = [
         FieldPanel("name"),
-        FieldPanel("icon_name"),
+        FieldPanel("icon"),
     ]
 
     def __str__(self):
@@ -30,9 +36,17 @@ class Category(models.Model):
 @register_snippet
 class ProjectType(models.Model):
     name = models.TextField(blank=True, verbose_name="Tip projekta")
+    icon = models.ForeignKey(
+        "wagtailimages.Image",
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        verbose_name="Ikona")
 
     panels = [
         FieldPanel("name"),
+        FieldPanel("icon"),
     ]
 
     def __str__(self):
@@ -63,6 +77,12 @@ class HomePage(Page):
         FieldPanel("introduction"),
     ]
 
+    parent_page_type = [
+    ]
+    subpage_types = [
+        'home.ProjectPage',
+    ]
+
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
 
@@ -87,7 +107,10 @@ class HomePage(Page):
 
         for category in categories:
             category_projects = projects.filter(category=category)
-            categories_dict[category.name] = category_projects
+            categories_dict[category.id] = {
+                "projects": category_projects,
+                "category": category
+            }
 
         return {
             **context,
@@ -160,6 +183,12 @@ class ProjectPage(Page):
             ],
             heading="Kontakt",
         ),
+    ]
+
+    parent_page_type = [
+        'home.HomePage'
+    ]
+    subpage_types = [
     ]
 
 
