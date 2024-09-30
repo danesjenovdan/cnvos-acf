@@ -8,4 +8,4 @@ resources:
 images:
   - name: cnvos-acf
     newName: rg.fr-par.scw.cloud/djnd/cnvos-acf
-    newTag: '53283a84db9cf30482e3164d25f0cf6fc12cb1f7'
+    newTag: 'e9034aba8aa380fd144b75af6e828a27003654d6'
