@@ -37,6 +37,10 @@ form {
     font-size: 24px;
 }
 
+.introduction a {
+    color: var(--primary-color);
+}
+
 @media (max-width: 768px) {
   .introduction {
     font-size: 18px;
