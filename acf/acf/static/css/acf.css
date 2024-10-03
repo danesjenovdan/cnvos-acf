@@ -20,7 +20,6 @@ h1 {
 }
 
 footer p {
-    font-family: "Lora", serif;
     font-size: 11px;
     line-height: 14px;
     font-style: italic;
@@ -33,7 +32,6 @@ form {
 }
 
 .introduction {
-    font-family: "Lora", serif;
     font-size: 24px;
 }
 
@@ -53,13 +51,15 @@ h6 {
 }
 
 .filter-button {
-    font-size: 20px;
-    line-height: 34px;
+    font-size: 24px;
+    line-height: 40px;
     background-color: #D2F6E5;
+    transition: 0.25s ease-out;
 }
 
 .filter-button:hover {
     background-color: #D2F6E5;
+    transform: scale(1.1);
 }
 
 .filters input {
@@ -87,7 +87,6 @@ h6 {
     border: 1px solid black;
     font-size: 11px;
     line-height: 13px;
-    font-family: "Lora", serif;
 }
 
 .filters label img {
@@ -122,7 +121,6 @@ h6 {
 
 .colored-section h2 {
     margin-bottom: 0;
-    font-family: "Lora", serif;
     font-size: 21px;
 }
 
@@ -157,6 +155,7 @@ h6 {
 .projects-list .card-img-top {
     width: 100%;
     height: 180px;
+    object-fit: cover;
 }
 
 .projects-list .card-title {
@@ -168,7 +167,7 @@ h6 {
 
 .projects-list .card-text {
     font-size: 14px;
-    line-height: 14px;
+    line-height: 18px;
     color: black;
 }
 
@@ -189,6 +188,18 @@ h6 {
     max-height: 100%;
     width: auto;
     height: auto;
+}
+
+.carousel-control-next, .carousel-control-prev {
+    opacity: 1;
+}
+
+.carousel-control-next-icon, .carousel-control-prev-icon {
+    width: 3rem;
+    height: 3rem;
+    background-size: 60% 60%;
+    background-color: rgba(0,0,0,0.5);
+    border-radius: 50%;
 }
 
 .carousel-item img {
@@ -235,7 +246,6 @@ h6 {
 
 .category-badge {
     background-color: #D0EBFF;
-    font-family: "Lora", serif;
     color: black;
     font-weight: 500;
     font-size: 11px;
@@ -248,7 +258,6 @@ h6 {
 
 .project-type-badge {
     background-color: #D2F6E5;
-    font-family: "Lora", serif;
     color: black;
     font-weight: 500;
     font-size: 11px;
@@ -265,9 +274,9 @@ h6 {
     margin-right: 5px;
 }
 
-.rich-text {
+/* .rich-text {
     font-family: "Lora", serif;
-}
+} */
 
 .rich-text p, li {
     font-size: 20px;
