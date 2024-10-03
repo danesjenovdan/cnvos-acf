@@ -80,7 +80,7 @@
             {% for project in data.projects %}
                 <div class="col-md-6 col-lg-4 col-xl-3">
                     <a href="{% pageurl project %}" class="card mb-4 position-relative">
-                        {% image project.card_image original class="card-img-top" %}
+                        {% image project.card_image width-400 class="card-img-top" %}
                         <div class="card-body my-4">
                             <h5 class="card-title">{{ project.title }}</h5>
                             <p class="card-text">{{ project.project_owner }}</p>
