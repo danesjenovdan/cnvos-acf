@@ -1,29 +1,32 @@
 name: Check formatting
-run-name: Check formatting for commit "${{ github.event.head_commit.message }}"
 on:
   push:
     branches:
-      - main
+      - "main"
   pull_request:
     branches:
-      - k8s
+      - "k8s"
 jobs:
-  test:
-    name: Check formatting
+  check_python_formatting:
+    name: Check Python formatting
     runs-on: ubuntu-latest
     steps:
       - name: Check out the repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
-          python-version: "3.8"
+          python-version: "3.12"
 
       - name: Install dependencies
         run: |
-          pip install black
+          pip install black isort
 
       - name: Check formatting with black
         run: |
-          black . --check
+          black . --check --diff
+
+      - name: Check formatting with isort
+        run: |
+          isort . --check --diff --profile black

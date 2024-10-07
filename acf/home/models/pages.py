@@ -1,12 +1,11 @@
-from django.db import models
 from django import forms
-
+from django.db import models
 from wagtail import blocks
-from wagtail.models import Page
-from wagtail.fields import RichTextField, StreamField
 from wagtail.admin.panels import FieldPanel, MultiFieldPanel
-from wagtail.snippets.models import register_snippet
+from wagtail.fields import RichTextField, StreamField
 from wagtail.images.blocks import ImageChooserBlock
+from wagtail.models import Page
+from wagtail.snippets.models import register_snippet
 
 
 @register_snippet
