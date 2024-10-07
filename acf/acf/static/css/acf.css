@@ -38,6 +38,11 @@ footer p {
     font-style: italic;
 }
 
+.footer-logos img {
+    max-width: 250px;
+    max-height: 60px;
+}
+
 /* HOMEPAGE */
 
 form {
