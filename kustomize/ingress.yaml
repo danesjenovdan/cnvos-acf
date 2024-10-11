@@ -11,9 +11,20 @@ spec:
   tls:
     - hosts:
         - acf.lb.djnd.si
+        - acf.cnvos.si
       secretName: cnvos-acf-tls
   rules:
     - host: acf.lb.djnd.si
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: cnvos-acf
+                port:
+                  number: 8000
+    - host: acf.cnvos.si
       http:
         paths:
           - path: /

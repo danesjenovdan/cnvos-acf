@@ -1,5 +1,5 @@
-# Use an official Python runtime based on Debian 10 "buster" as a parent image.
-FROM python:3.8.1-slim-buster
+# Use an official Python runtime based on Debian 12 "bookworm" as a parent image.
+FROM python:3.11-slim-bookworm
 
 # Add user that will be used in the container.
 RUN useradd wagtail
@@ -16,16 +16,20 @@ ENV PYTHONUNBUFFERED=1 \
 
 # Install system packages required by Wagtail and Django.
 RUN apt-get update --yes --quiet && apt-get install --yes --quiet --no-install-recommends \
+    gettext \
     build-essential \
     libpq-dev \
-    libmariadbclient-dev \
+    libmariadb-dev \
     libjpeg62-turbo-dev \
     zlib1g-dev \
     libwebp-dev \
+    libicu-dev \
+    python3-icu \
+    pkg-config \
  && rm -rf /var/lib/apt/lists/*
 
 # Install the application server.
-RUN pip install "gunicorn==20.0.4"
+RUN pip install "gunicorn==21.2.0"
 
 # Install the project requirements.
 COPY requirements.txt /
@@ -34,9 +38,7 @@ RUN pip install -r /requirements.txt
 # Use /app folder as a directory where the source code is stored.
 WORKDIR /app
 
-# Set this directory to be owned by the "wagtail" user. This Wagtail project
-# uses SQLite, the folder needs to be owned by the user that
-# will be writing to the database file.
+# Set this directory to be owned by the "wagtail" user.
 RUN chown wagtail:wagtail /app
 
 # Copy the source code of the project into the container.
