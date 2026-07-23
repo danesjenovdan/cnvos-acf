@@ -1,28 +1,35 @@
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: enable-cors
+spec:
+  headers:
+    accessControlAllowOriginList:
+      - "https://acf.cnvos.si"
+    accessControlAllowMethods:
+      - GET
+      - POST
+      - PUT
+      - DELETE
+      - OPTIONS
+    accessControlAllowHeaders:
+      - "*"
+---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: cnvos-acf
   annotations:
     cert-manager.io/cluster-issuer: "letsencrypt-production"
-    nginx.ingress.kubernetes.io/proxy-body-size: 10m
+    traefik.ingress.kubernetes.io/router.middlewares: |
+      traefik-redirect-to-https@kubernetescrd
 spec:
-  ingressClassName: nginx
+  ingressClassName: traefik
   tls:
     - hosts:
-        - acf.lb.djnd.si
         - acf.cnvos.si
       secretName: cnvos-acf-tls
   rules:
-    - host: acf.lb.djnd.si
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: cnvos-acf
-                port:
-                  number: 8000
     - host: acf.cnvos.si
       http:
         paths:
@@ -40,15 +47,17 @@ metadata:
   name: cnvos-acf-nginx
   annotations:
     cert-manager.io/cluster-issuer: "letsencrypt-production"
-    nginx.ingress.kubernetes.io/enable-cors: "true"
+    traefik.ingress.kubernetes.io/router.middlewares: |
+      traefik-redirect-to-https@kubernetescrd,
+      cnvos-acf-enable-cors@kubernetescrd
 spec:
-  ingressClassName: nginx
+  ingressClassName: traefik
   tls:
     - hosts:
-        - files.acf.lb.djnd.si
+        - files.acf.cnvos.si
       secretName: cnvos-acf-nginx-tls
   rules:
-    - host: files.acf.lb.djnd.si
+    - host: files.acf.cnvos.si
       http:
         paths:
           - path: /
