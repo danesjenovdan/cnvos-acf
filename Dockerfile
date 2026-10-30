@@ -4,26 +4,10 @@
 # ---------------------------------- WARNING ----------------------------------
 
 # ---
-# build scss in separate image
-# ---
-# FROM node:20-alpine as css-compile
-
-# WORKDIR /app
-
-# COPY ./css-compile/package.json ./css-compile/yarn.lock ./
-# RUN yarn
-
-# COPY ./djnd ./djnd
-# COPY ./css-compile/src ./src
-# COPY ./css-compile/postcss.config.js ./css-compile/tailwind.config.js ./
-
-# RUN yarn build
-
-# ---
 # wagtail image
 # ---
-# Use an official Python runtime based on Debian 12 "bookworm" as a parent image.
-FROM python:3.11-slim-bookworm
+# Use an official Python runtime based on Debian 13 "trixie" as a parent image.
+FROM python:3.14-slim-trixie
 
 # Add user that will be used in the container.
 RUN useradd wagtail
@@ -52,9 +36,6 @@ RUN apt-get update --yes --quiet && apt-get install --yes --quiet --no-install-r
     pkg-config \
  && rm -rf /var/lib/apt/lists/*
 
-# Install the application server.
-RUN pip install "gunicorn==21.2.0"
-
 # Install the project requirements.
 COPY ./acf/requirements.txt /
 RUN pip install -r /requirements.txt
@@ -67,9 +48,6 @@ RUN chown wagtail:wagtail /app
 
 # Copy the source code of the project into the container.
 COPY --chown=wagtail:wagtail ./acf .
-
-# Copy the compiled CSS from the previous image.
-# COPY --chown=wagtail:wagtail --from=css-compile /app/djnd/djnd/static/css ./djnd/static/css
 
 # Use user "wagtail" to run the build commands below and the server itself.
 USER wagtail
