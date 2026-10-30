@@ -102,6 +102,7 @@ spec:
               cpu: 200m
         - name: acf-nginx
           image: nginx:alpine
+          imagePullPolicy: Always
           volumeMounts:
             - name: cnvos-acf-storage
               mountPath: /usr/share/nginx/html

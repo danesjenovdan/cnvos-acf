@@ -1,5 +1,5 @@
-# Use an official Python runtime based on Debian 12 "bookworm" as a parent image.
-FROM python:3.11-slim-bookworm
+# Use an official Python runtime based on Debian 13 "trixie" as a parent image.
+FROM python:3.14-slim-trixie
 
 # Add user that will be used in the container.
 RUN useradd wagtail
@@ -28,9 +28,6 @@ RUN apt-get update --yes --quiet && apt-get install --yes --quiet --no-install-r
     pkg-config \
  && rm -rf /var/lib/apt/lists/*
 
-# Install the application server.
-RUN pip install "gunicorn==21.2.0"
-
 # Install the project requirements.
 COPY requirements.txt /
 RUN pip install -r /requirements.txt
@@ -46,9 +43,6 @@ COPY --chown=wagtail:wagtail . .
 
 # Use user "wagtail" to run the build commands below and the server itself.
 USER wagtail
-
-# Collect static files.
-RUN python manage.py collectstatic --noinput --clear
 
 # Runtime command that executes when "docker run" is called, it does the
 # following:

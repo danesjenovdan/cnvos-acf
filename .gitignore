@@ -145,3 +145,5 @@ bundle.css.map
 media/
 # only ignore root static if it was accidentally added in dev
 /static/
+
+db.dump
